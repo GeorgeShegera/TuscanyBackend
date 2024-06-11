@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,13 @@ namespace Tuscany.DataAccess.Repository
         public void Update(User user)
         {
             _db.Update(user);
+        }
+
+        public async Task<User?> FindByNameOrEmail(string email, string username)
+        {
+            User? user = await _db.Users
+                .FirstAsync(x => x.Name == username || x.Email == email);
+            return user;
         }
     }
 }

@@ -17,9 +17,9 @@ namespace TuscanyBackend.Controllers
     {
         public UserManager<User> _userManager;
         public RoleManager<IdentityRole> _roleManager;
-        public UnitOfWork _unitOfWork;
+        public IUnitOfWork _unitOfWork;
 
-        public AuthController(UnitOfWork unitOfWork, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public AuthController(IUnitOfWork unitOfWork, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
@@ -47,9 +47,9 @@ namespace TuscanyBackend.Controllers
         [Route("/regUser")]
         public async Task<IActionResult> RegUser([FromBody] Register model)
         {
-            var useEx = await _userManager.FindByNameAsync(model.UserName!);
+            var useEx = await _unitOfWork.User.FindByNameOrEmail(model.Email, model.UserName);
             if (useEx is not null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "User in db already");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Username or email in db already");
 
 
             User user = new()
@@ -122,27 +122,12 @@ namespace TuscanyBackend.Controllers
             return Unauthorized();
         }
 
-        //[HttpDelete]
-        //public IActionResult DeleteUser(string id)
-        //{
-
-        //    List<IdentityUserClaim<string>> claims = _unitOfWork._db.UserClaims
-        //        .Where(x => x.UserId == id).ToList();
-
-        //    _unitOfWork._db.UserClaims.RemoveRange(claims);
-
-        //    List<IdentityUserLogin<string>> userLogins = _unitOfWork._db.UserLogins
-        //        .Where(x => x.UserId == id).ToList();
-
-        //    _unitOfWork._db.UserLogins.RemoveRange(userLogins);
-
-
-
-
-        //    _unitOfWork.Save();
-
-        //    return Ok();
-        //}
+        [HttpGet]
+        [Route("/getUsers")]
+        public ActionResult<IEnumerable<User>> GetUsers()
+        {
+            return _unitOfWork.User.GetAll().ToList();
+        }
     }
 }
 
