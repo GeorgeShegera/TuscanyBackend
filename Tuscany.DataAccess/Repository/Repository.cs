@@ -26,6 +26,11 @@ namespace Tuscany.DataAccess.Repository
             dbSet.Add(entity);
         }
 
+        public IEnumerable<T> GetMany(Expression<Func<T, bool>> filter)
+        {
+            return dbSet.Where(filter);
+        }
+
         public T? Get(Expression<Func<T, bool>> filter)
         {
             return dbSet.Where(filter).FirstOrDefault();

@@ -54,6 +54,41 @@ namespace Tuscany.Controllers
             }).ToList();
         }
 
+        [HttpGet]
+        [Route("/getComment")]
+        public ActionResult<List<CommentWebUser>> GetComments(int tourId)
+        {
+            //var test = from c in _unitOfWork.Comment.GetAll()
+            //                            where c.TourId == tourId
+            //                            join u in _unitOfWork.User.GetAll()
+            //                            on c.UserId.ToString() equals u.Id.ToString()
+            //                            select new CommentWebUser()
+            //                            {
+            //                                Id = c.Id,
+            //                                Text = c.Text,
+            //                                UserId = c.UserId,
+            //                                TourId = c.TourId,
+            //                                Name = u.Name,
+            //                                Surname = u.Surname,
+            //                                AvatarUrl = u.Avatar
+            //                            };
+            var comments = _unitOfWork.Comment.GetMany(x => x.TourId == tourId)
+                .Join(_unitOfWork.User.GetAll(),
+                    c => c.UserId,
+                    u => u.Id,
+                    (c, u) => new CommentWebUser()
+                    {
+                        Id = c.Id,
+                        Text = c.Text,
+                        UserId = c.UserId,
+                        TourId = c.TourId,
+                        Name = u.Name,
+                        Surname = u.Surname,
+                        AvatarUrl = u.Avatar
+                    });
+            return comments.ToList();
+        }
+
         //[Authorize]
         [HttpPut]
         [Route("/putComment")]
