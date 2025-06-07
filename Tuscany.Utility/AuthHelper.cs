@@ -10,7 +10,7 @@ namespace Tuscany.Utility
         {
             //Guid id = Guid.NewGuid();
 
-            DateTime expires = DateTime.UtcNow.Add(TimeSpan.FromMinutes(2));
+            DateTime expires = DateTime.Now.Add(TimeSpan.FromDays(1));
             // Creating JWT token
             var jwt = new JwtSecurityToken(
                 issuer: AuthOptions.ISSUER,

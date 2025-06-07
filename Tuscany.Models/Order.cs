@@ -14,9 +14,11 @@ public partial class Order
 
     public int StatusId { get; set; }
 
-    public int PaymentMethod { get; set; }
+    public int? PaymentMethod { get; set; }
 
     public string? UserId { get; set; }
+
+    public DateTime? DateTime { get; set; }
 
     public virtual PaymentMethod? PaymentMethodNavigation { get; set; } = null!;
 

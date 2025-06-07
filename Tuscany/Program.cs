@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,7 +25,12 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -50,7 +56,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("V1", new OpenApiInfo
     {
         Version = "V1",
-        Title = "Medical Plus WEB API",
+        Title = "Tuscany WEB API",
         Description = ""
     });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -84,14 +90,15 @@ app.UseCors(x => x
         .AllowCredentials());
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+//}
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/V1/swagger.json", "Tuscany WebAPI");
-    });
-}
+    options.SwaggerEndpoint("/swagger/V1/swagger.json", "Tuscany WebAPI");
+});
+
 
 app.UseHttpsRedirection();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,13 @@ namespace Tuscany.DataAccess.Repository
         public void Update(Order order)
         {
             _db.Update(order);
+        }
+
+        public Order AddOrderReturn(Order order)
+        {
+            EntityEntry<Order> orderEntity = _db.Add(order);
+            _db.SaveChanges();
+            return orderEntity.Entity;
         }
     }
 }

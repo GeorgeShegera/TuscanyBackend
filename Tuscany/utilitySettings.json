@@ -1,0 +1,12 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "LiqPayPrivateKey": "sandbox_BNtsFcc3MKW2djc4BHgUDHmpl1uCa1cG73gGOD3g",
+  "LiqPayPublicKey": "sandbox_i53604402195"
+}

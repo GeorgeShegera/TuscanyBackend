@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,8 @@ namespace Tuscany.DataAccess.Repository
         {
             _db.Update(tour);
         }
+
+        public List<Tour> GetAllToursWithComments()
+            => [.. _db.Tours.Include(t => t.Comments)];
     }
 }

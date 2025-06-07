@@ -19,7 +19,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postLanguage")]
         public IActionResult PostLanguage([FromBody] LanguageWeb languageWeb)
@@ -77,7 +77,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteLanguage")]
         public IActionResult DeleteLanguage(int id)

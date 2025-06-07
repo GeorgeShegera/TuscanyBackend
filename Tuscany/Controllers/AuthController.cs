@@ -38,9 +38,20 @@ namespace TuscanyBackend.Controllers
                 audience: AuthOptions.AUDIENCE,
                 claims: claims,
                 expires: DateTime.UtcNow.Add(TimeSpan.FromDays(2)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
+        [HttpGet]
+        [Route("/getRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            return Ok(new
+            {
+                IdentityRoles = _roleManager.Roles.ToList()
+            });
         }
 
         [HttpPost]
@@ -91,12 +102,14 @@ namespace TuscanyBackend.Controllers
             return StatusCode(404);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] Login model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromQuery] string login,
+                                               [FromQuery] string password)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            var user = await _userManager.FindByNameAsync(login);
+            if (user != null && await _userManager.CheckPasswordAsync(user, password))
             {
 
                 var userRole = await _userManager.GetRolesAsync(user);
@@ -114,7 +127,8 @@ namespace TuscanyBackend.Controllers
 
                 return Ok(new
                 {
-                    token.UserName,
+                    user.Id,
+                    user.Avatar,
                     token.Token,
                     token.Expires
                 });

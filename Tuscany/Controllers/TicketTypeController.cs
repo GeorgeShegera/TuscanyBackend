@@ -17,7 +17,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postTicketType")]
         public IActionResult PostTicketType([FromBody] TicketTypeWeb ticketsTypeWeb)
@@ -39,7 +39,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("/getTicketTypes")]
         public ActionResult<IEnumerable<TicketTypeWeb>> GetTickets()
@@ -51,7 +51,7 @@ namespace TuscanyBackend.Controllers
             }).ToList();
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut]
         [Route("/putTicketType")]
         public IActionResult PutTicket([FromBody] TicketTypeWeb newTicketType)
@@ -75,7 +75,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteTicketType")]
         public IActionResult DeleteTicketType(int id)

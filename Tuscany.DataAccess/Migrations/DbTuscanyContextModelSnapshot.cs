@@ -236,7 +236,10 @@ namespace Tuscany.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PaymentMethod")
+                    b.Property<DateTime?>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PaymentMethod")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Price")
@@ -657,7 +660,6 @@ namespace Tuscany.DataAccess.Migrations
                     b.HasOne("Tuscany.Models.PaymentMethod", "PaymentMethodNavigation")
                         .WithMany("Orders")
                         .HasForeignKey("PaymentMethod")
-                        .IsRequired()
                         .HasConstraintName("FK__Orders__PaymentM__5EBF139D");
 
                     b.HasOne("Tuscany.Models.OrderStatus", "Status")

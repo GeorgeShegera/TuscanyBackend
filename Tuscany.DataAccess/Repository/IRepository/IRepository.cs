@@ -13,7 +13,7 @@ namespace Tuscany.DataAccess.Repository.IRepository
         T? Get(Expression<Func<T, bool>> filter);
         IEnumerable<T> GetMany(Expression<Func<T, bool>> filter);
         void Add(T entity);
-        void Remove(T entity);
+        void Remove(T entity);        
         void RemoveRange(IEnumerable<T> entities);
     }
 }

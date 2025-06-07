@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tuscany.Models\Tuscany.Models.csproj" />
-    <ProjectReference Include="..\Tuscany.Utility\Tuscany.Utility.csproj" />
     <ProjectReference Include="..\Tuscany.WebModels\Tuscany.WebModels.csproj" />
   </ItemGroup>
 

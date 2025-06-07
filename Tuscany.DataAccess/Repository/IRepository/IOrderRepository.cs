@@ -10,5 +10,6 @@ namespace Tuscany.DataAccess.Repository.IRepository
     public interface IOrderRepository : IRepository<Order>
     {
         void Update(Order order);
+        Order AddOrderReturn(Order order);
     }
 }

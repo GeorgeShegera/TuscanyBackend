@@ -18,7 +18,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postTransport")]
         public IActionResult PostOrder([FromBody] TransportWeb transportWeb)
@@ -53,7 +53,7 @@ namespace TuscanyBackend.Controllers
             }).ToList();
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("/putTransport")]
         public IActionResult PutTour([FromBody] TransportWeb transportWeb)
@@ -76,7 +76,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteTransport")]
         public IActionResult DeleteTransport(int id)

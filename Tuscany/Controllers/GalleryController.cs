@@ -20,7 +20,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postGallery")]
         public IActionResult PostTourGallery([FromBody] GalleryWeb galleryWebModel)
@@ -42,7 +42,6 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize]
         [HttpGet]
         [Route("/getGalleries")]
         public ActionResult<IEnumerable<GalleryWeb>> GetGallerys()
@@ -58,7 +57,7 @@ namespace TuscanyBackend.Controllers
             return galleryModels;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("/putGallery")]
         public IActionResult PutGallery([FromBody] GalleryWeb galleryWeb)
@@ -82,7 +81,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteGallery")]
         public IActionResult DeleteGallery(int id)

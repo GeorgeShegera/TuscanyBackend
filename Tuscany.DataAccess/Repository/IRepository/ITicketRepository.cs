@@ -10,5 +10,8 @@ namespace Tuscany.DataAccess.Repository.IRepository
     public interface ITicketRepository : IRepository<Ticket>
     {
         void Update(Ticket ticket);
+
+        Dictionary<string, int> GetTicketsCount(int orderId);
+        void RemoveLastOfType(int ticketTypeId);
     }
 }

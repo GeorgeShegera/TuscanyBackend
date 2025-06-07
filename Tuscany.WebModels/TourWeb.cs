@@ -10,23 +10,23 @@ namespace Tuscany.WebModels
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; } = null!;
 
         public string? Details { get; set; }
 
         public string? Description { get; set; }
 
-        public int MinNumberOfGroup { get; set; }
+        public int? MinNumberOfGroup { get; set; }
 
-        public int MaxNumberOfGroup { get; set; }
+        public int? MaxNumberOfGroup { get; set; }
 
-        public int TransportId { get; set; }
+        public int? TransportId { get; set; }
 
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
-        public bool GuideService { get; set; }
+        public bool? GuideService { get; set; }
 
-        public string DepAndArrivAreas { get; set; } = null!;
+        public string? DepAndArrivAreas { get; set; }
 
         public decimal? EntryFees { get; set; }
 

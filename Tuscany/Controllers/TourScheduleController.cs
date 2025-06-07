@@ -18,7 +18,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postTourSchedule")]
         public IActionResult PostTourSchedule([FromBody] TourScheduleWeb toursScheduleWeb)
@@ -55,7 +55,7 @@ namespace TuscanyBackend.Controllers
             }).ToList();
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("/putTourSchedule")]
         public IActionResult PutTour([FromBody] TourScheduleWeb tourScheduleWeb)

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tuscany.DataAccess.Repository.IRepository;
 using Tuscany.Models;
+using Tuscany.Utility;
 using Tuscany.WebModels;
 
 namespace Tuscany.Controllers
@@ -16,7 +18,7 @@ namespace Tuscany.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("/postComment")]
         public IActionResult PostComment([FromBody] CommentWeb commentWeb)
@@ -39,7 +41,6 @@ namespace Tuscany.Controllers
             }
         }
 
-        //[Authorize]
         [HttpGet]
         [Route("/getComments")]
         public ActionResult<IEnumerable<CommentWeb>> GetComments()
@@ -56,40 +57,40 @@ namespace Tuscany.Controllers
 
         [HttpGet]
         [Route("/getComment")]
-        public ActionResult<List<CommentWebUser>> GetComments(int tourId)
+        public ActionResult<List<CommentWebUser>> GetComments(int? tourId)
         {
-            //var test = from c in _unitOfWork.Comment.GetAll()
-            //                            where c.TourId == tourId
-            //                            join u in _unitOfWork.User.GetAll()
-            //                            on c.UserId.ToString() equals u.Id.ToString()
-            //                            select new CommentWebUser()
-            //                            {
-            //                                Id = c.Id,
-            //                                Text = c.Text,
-            //                                UserId = c.UserId,
-            //                                TourId = c.TourId,
-            //                                Name = u.Name,
-            //                                Surname = u.Surname,
-            //                                AvatarUrl = u.Avatar
-            //                            };
-            var comments = _unitOfWork.Comment.GetMany(x => x.TourId == tourId)
-                .Join(_unitOfWork.User.GetAll(),
-                    c => c.UserId,
-                    u => u.Id,
-                    (c, u) => new CommentWebUser()
-                    {
-                        Id = c.Id,
-                        Text = c.Text,
-                        UserId = c.UserId,
-                        TourId = c.TourId,
-                        Name = u.Name,
-                        Surname = u.Surname,
-                        AvatarUrl = u.Avatar
-                    });
+            var comments = from c in _unitOfWork.Comment.GetAll()
+                           join u in _unitOfWork.User.GetAll()
+                           on c.UserId.ToString() equals u.Id.ToString()
+                           select new CommentWebUser()
+                           {
+                               Id = c.Id,
+                               Text = c.Text,
+                               UserId = c.UserId,
+                               TourId = c.TourId,
+                               Name = u.Name,
+                               Surname = u.Surname,
+                               AvatarUrl = u.Avatar
+                           };
+
+            if (tourId is null)
+            {
+                comments = (from c in comments
+                            orderby Guid.NewGuid()
+                            select c)
+                            .Take(5);
+            }
+            else
+            {
+                comments = from c in comments
+                           where c.TourId == tourId
+                           select c;
+            }
+
             return comments.ToList();
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut]
         [Route("/putComment")]
         public IActionResult PutComment([FromBody] CommentWeb newOrder)
@@ -116,7 +117,7 @@ namespace Tuscany.Controllers
         }
 
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteComment")]
         public IActionResult DeleteCommet(int id)

@@ -23,9 +23,11 @@ namespace Tuscany.DataAccess.Repository
 
         public async Task<User?> FindByNameOrEmail(string email, string username)
         {
-            User? user = await _db.Users
-                .FirstAsync(x => x.Name == username || x.Email == email);
-            return user;
+            List<User> users = await _db.Users.ToListAsync();
+            return users.FirstOrDefault(x => x.Name is not null &&
+                                    x.Email is not null &&
+                                    (x.Name == username ||
+                                    x.Email == email));
         }
     }
 }

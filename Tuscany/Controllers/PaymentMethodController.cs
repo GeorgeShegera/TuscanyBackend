@@ -20,7 +20,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postPaymentMethod")]
         public IActionResult Post([FromBody] PaymentMethodWeb paymentMethodWeb)
@@ -42,7 +42,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("/getPaymentMethods")]
         public ActionResult<IEnumerable<PaymentMethodWeb>> GetPaymentMethods()

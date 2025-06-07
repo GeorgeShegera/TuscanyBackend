@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tuscany.Models;
-using Tuscany.Utility;
 
 namespace Tuscany.DataAccess.DB;
 

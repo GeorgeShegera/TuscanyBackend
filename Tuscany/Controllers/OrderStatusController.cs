@@ -19,7 +19,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postOrderStatus")]
         public IActionResult Post([FromBody] OrderStatus orderStatusWeb)
@@ -52,7 +52,7 @@ namespace TuscanyBackend.Controllers
             }).ToList();
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("/putOrderStatus")]
         public IActionResult PutOrderStatus([FromBody] OrderStatusWeb orderStatusWeb)
@@ -77,7 +77,7 @@ namespace TuscanyBackend.Controllers
         }
 
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteOrderStatus")]
         public IActionResult DeleteOrderStatus(int id)

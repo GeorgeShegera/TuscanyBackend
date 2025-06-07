@@ -19,7 +19,7 @@ namespace TuscanyBackend.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("/postToursLanguages")]
         public IActionResult PostToursLanguages([FromBody] ToursLanguageWeb toursLanguageWeb)
@@ -55,7 +55,7 @@ namespace TuscanyBackend.Controllers
             }).ToList();
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("/putToursLanguage")]
         public IActionResult PutTour([FromBody] ToursLanguageWeb tourLanguageWeb)
@@ -81,7 +81,7 @@ namespace TuscanyBackend.Controllers
             }
         }
 
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("/deleteToursLanguages")]
         public IActionResult DeleteToursLanguages(int id)
